@@ -3,8 +3,7 @@
 </h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/6502_Assembly-8A2BE2?style=for-the-badge&color=rgb(107%2C%2090%2C%2088)
-" alt="Unity">
+  <img src="https://img.shields.io/badge/6502_Assembly-8A2BE2?style=for-the-badge&color=rgb(107%2C%2090%2C%2088)" alt="6502 Assembly">
 </p>
 
 <h4 align="center">Test projects for NES game development.</h4>
