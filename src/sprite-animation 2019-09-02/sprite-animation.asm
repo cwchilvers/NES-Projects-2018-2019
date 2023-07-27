@@ -9,9 +9,9 @@
 ; -------------------------------- VARIABLES -----------------------------------
 ; ==============================================================================
 
-  	.rsset $0000	; Start defining variables at RAM location 0
+    .rsset $0000	; Start defining variables at RAM location 0
 
-PPU_STATUS	  = $2002
+PPU_STATUS	    = $2002
 OAM_ADDR 	    = $2003
 PPU_SCROLL   	= $2005
 PPU_ADDR	    = $2006
@@ -36,22 +36,22 @@ DRAGON_x_B2     = $022B
 DRAGON_x_B3     = $022F
 
 ; tiles
-DRAGON_tile_T1     = $0201
-DRAGON_tile_T2     = $0205
-DRAGON_tile_T3     = $0209
+DRAGON_tile_T1      = $0201
+DRAGON_tile_T2      = $0205
+DRAGON_tile_T3      = $0209
 DRAGON_tile_TM1     = $020D
 DRAGON_tile_TM2     = $0211
 DRAGON_tile_TM3     = $0215
 DRAGON_tile_BM1     = $0219
 DRAGON_tile_BM2     = $021D
 DRAGON_tile_BM3     = $0221
-DRAGON_tile_B1     = $0225
-DRAGON_tile_B2     = $0229
-DRAGON_tile_B3     = $022D
+DRAGON_tile_B1      = $0225
+DRAGON_tile_B2      = $0229
+DRAGON_tile_B3      = $022D
 
-MOVE_HalfSpeed          .rs 1
+MOVE_HalfSpeed .rs 1
 
-ANIMATION_FrameCounter  .rs 1
+ANIMATION_FrameCounter .rs 1
 
 ; ----- MARIO ------------------------------------------------------------------
 
@@ -70,10 +70,10 @@ MARIO_Tile_M2  = $023D
 MARIO_Tile_T1  = $0241
 MARIO_Tile_T2  = $0245
 
-MARIO_Frame       .rs 1
+MARIO_Frame .rs 1
 
 ; ----- Controller -------------------------------------------------------------
-controller_1	 = $4016
+controller_1    = $4016
 controller_button .rs 1
 
 ; ______________________________________________________________________________
@@ -101,10 +101,10 @@ vblank_1:
     BPL vblank_1
 
 clear_memory:
-    LDA #$00		  ; Load accumulator with memory $00 (0)
+    LDA #$00	    ; Load accumulator with memory $00 (0)
     STA $0000, x	; Store accumulator (x = $00) in $0000 (Zero Page)
     STA $0100, x 	; Store accumulator (x = $00) in $0100 (Stack)
-                  ; Skip $0200 (Sprites Data) to avoid glitch sprite at 0,0
+                    ; Skip $0200 (Sprites Data) to avoid glitch sprite at 0,0
     STA $0300, x 	; Store accumulator (x = $00) in $0300 (RAM)
     STA $0400, x 	; Store accumulator (x = $00) in $0400 (RAM)
     STA $0500, x 	; Etc...
@@ -123,19 +123,19 @@ vblank_2:
 ; ----- Load Palettes ----------------------------------------------------------
 LOAD_Palettes:
     LDA PPU_STATUS	; Read PPU status (in $2002) to reset the high/low latch
-    LDA #$3F		    ; Load $3F00 (where palets are stored) in PPU
-    STA PPU_ADDR	  ; Set high byte of $3500 address in $2006
-    LDA #$00		    ; Load $0000 (where pattern tables are stored) in PPU
+    LDA #$3F	    ; Load $3F00 (where palets are stored) in PPU
+    STA PPU_ADDR    ; Set high byte of $3500 address in $2006
+    LDA #$00	    ; Load $0000 (where pattern tables are stored) in PPU
     STA PPU_ADDR  	; Set low byte of $3500 address in $2006
-    LDX #$00		    ; Set X to 0
+    LDX #$00	    ; Set X to 0
 
 LOAD_Palettes_LOOP:
-    LDA Palettes, x	           ; Load from address (bg_palette) + X (0)
-    STA PPU_DATA				       ; Write to $2007
-    INX						             ; X = X + 1
-    CPX #$20				           ; Compare X to hex $10 (16)
-    BNE LOAD_Palettes_LOOP	   ; Branch back if x =/= hex 10 (dec 16)
-    LDX #$00				           ; Reset X to 0
+    LDA Palettes, x	        ; Load from address (bg_palette) + X (0)
+    STA PPU_DATA		    ; Write to $2007
+    INX					    ; X = X + 1
+    CPX #$20			    ; Compare X to hex $10 (16)
+    BNE LOAD_Palettes_LOOP  ; Branch back if x =/= hex 10 (dec 16)
+    LDX #$00			    ; Reset X to 0
 
 ; ----- Load Sprites ----------------------------------------------------------
 LOAD_Sprites_LOOP:
@@ -147,60 +147,60 @@ LOAD_Sprites_LOOP:
 
 ; ----- Load Background --------------------------------------------------------
 LOAD_Background:    ; A.K.A."Nametable"
-  LDA PPU_STATUS
-  LDA #$20
-  STA PPU_ADDR
-  LDA #$00
-  STA PPU_ADDR
-  LDX #$00
+    LDA PPU_STATUS
+    LDA #$20
+    STA PPU_ADDR
+    LDA #$00
+    STA PPU_ADDR
+    LDX #$00
 
 LOAD_Background_T8_LOOP:
-  LDA Background_Top8, x
-  STA PPU_DATA
-  INX
-  CPX #$00
-  BNE LOAD_Background_T8_LOOP
+    LDA Background_Top8, x
+    STA PPU_DATA
+    INX
+    CPX #$00
+    BNE LOAD_Background_T8_LOOP
 LOAD_Background_TM8_LOOP:
-  LDA Background_TopMiddle8, x
-  STA PPU_DATA
-  INX
-  CPX #$00
-  BNE LOAD_Background_TM8_LOOP
+    LDA Background_TopMiddle8, x
+    STA PPU_DATA
+    INX
+    CPX #$00
+    BNE LOAD_Background_TM8_LOOP
 LOAD_Background_BM8_LOOP:
-  LDA Background_BottomMiddle8, x
-  STA PPU_DATA
-  INX
-  CPX #$00
-  BNE LOAD_Background_BM8_LOOP
+    LDA Background_BottomMiddle8, x
+    STA PPU_DATA
+    INX
+    CPX #$00
+    BNE LOAD_Background_BM8_LOOP
 LOAD_Background_B8_LOOP:
-  LDA Background_Bottom8, x
-  STA PPU_DATA
-  INX
-  CPX #$00
-  BNE LOAD_Background_B8_LOOP
+    LDA Background_Bottom8, x
+    STA PPU_DATA
+    INX
+    CPX #$00
+    BNE LOAD_Background_B8_LOOP
 
 ; ----- Load Attributes --------------------------------------------------------
 LOAD_Attributes:
-  LDA PPU_STATUS
-  LDA #$23
-  STA PPU_ADDR
-  LDA #$C0
-  STA PPU_ADDR
-  LDX #$00
+    LDA PPU_STATUS
+    LDA #$23
+    STA PPU_ADDR
+    LDA #$C0
+    STA PPU_ADDR
+    LDX #$00
 LOAD_Attributes_LOOP:
-  LDA Attributes, x
-  STA PPU_DATA
-  INX
-  CPX #$40
-  BNE LOAD_Attributes_LOOP
+    LDA Attributes, x
+    STA PPU_DATA
+    INX
+    CPX #$40
+    BNE LOAD_Attributes_LOOP
 
 ; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ; -------------------------- Enable Sprite Drawing -----------------------------
 Enable_Sprite_Drawing:
     LDA #%10010000
-    STA $2000			  ; Store bytes in $2000
-    LDA #%00011110	; 000 - Enable Sprites (1) - 0000
-    STA $2001			  ; Store bytes in $2001
+    STA $2000	        ; Store bytes in $2000
+    LDA #%00011110      ; 000 - Enable Sprites (1) - 0000
+    STA $2001		    ; Store bytes in $2001
 
 ; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ; ------------------------- Activate NMI Every Frame ---------------------------
@@ -208,10 +208,10 @@ NMI_LOOP:
     JMP NMI_LOOP
 
 NMI:
-    LDA #$00	   	  ; Load data from RAM address $0000
-    STA OAM_ADDR	  ; Set low byte of RAM address to $2003
+    LDA #$00	   	    ; Load data from RAM address $0000
+    STA OAM_ADDR	    ; Set low byte of RAM address to $2003
     LDA #$02		    ; Load from $0200 (RAM)
-    STA OAM_DMA	    ; Set high byte of RAM address to $4014 - Start Transfer
+    STA OAM_DMA	        ; Set high byte of RAM address to $4014 - Start Transfer
 
 
 
@@ -252,46 +252,46 @@ NMI:
 read_controller:
 
 LatchController:
-	 LDA #$01
-	 STA controller_1
-	 LDA #$00
-	 STX controller_1  	 ; Tell both controllers to latch buttons
+    LDA #$01
+    STA controller_1
+    LDA #$00
+    STX controller_1  	 ; Tell both controllers to latch buttons
 
 ReadA:
-	 LDA controller_1	   ; Player 1 memory port address
-	 AND #%00000001      ; Look at bit 0 and erase all other bits
-	 BEQ ReadADone	     ; Branch to ReadADone if A button NOT pressed (0)
-   ; If A button is pressed
-   LDX #$01
-   STX controller_button
+    LDA controller_1	   ; Player 1 memory port address
+    AND #%00000001      ; Look at bit 0 and erase all other bits
+    BEQ ReadADone	     ; Branch to ReadADone if A button NOT pressed (0)
+    ; If A button is pressed
+    LDX #$01
+    STX controller_button
 ReadADone:
 
 ReadB:
-	  LDA controller_1
-	  AND #%00000001
-	  BEQ ReadBDone
+    LDA controller_1
+    AND #%00000001
+    BEQ ReadBDone
     LDX #$02
     STX controller_button
 ReadBDone:
 
 ReadSelect:
-	  LDA controller_1
-	  AND #%00000001
-	  BEQ ReadSelectDone
+    LDA controller_1
+    AND #%00000001
+    BEQ ReadSelectDone
     LDX #$03
     STX controller_button
 ReadSelectDone:
 
 ReadStart:
-	  LDA controller_1
-	  AND #%00000001
-	  BEQ ReadStartDone
+    LDA controller_1
+    AND #%00000001
+    BEQ ReadStartDone
     LDX #$04
     STX controller_button
 ReadStartDone:
 
 ReadUp:
-	  LDA controller_1
+    LDA controller_1
     AND #%00000001
     BEQ ReadUpDone
     LDX #$05
@@ -299,7 +299,7 @@ ReadUp:
 ReadUpDone:
 
 ReadDown:
-	  LDA controller_1
+    LDA controller_1
     AND #%00000001
     BEQ ReadDownDone
     LDX #$06
@@ -307,7 +307,7 @@ ReadDown:
 ReadDownDone:
 
 ReadLeft:
-	  LDA controller_1
+    LDA controller_1
     AND #%00000001
     BEQ ReadLeftDone
     LDX #$07
@@ -315,7 +315,7 @@ ReadLeft:
 ReadLeftDone:
 
 ReadRight:
-	  LDA controller_1
+    LDA controller_1
     AND #%00000001
     BEQ ReadRightDone
     LDX #$08
@@ -392,14 +392,6 @@ MARIO_Frame2:
     LDX #$21
     STX MARIO_Tile_T2
     JMP DRAGON
-
-
-
-
-
-
-
-
 
 ; ===== DRAGON =================================================================
 DRAGON:
@@ -519,32 +511,6 @@ ResetCounter:
 DONE:
     LDX #$00
     STX controller_button   ; Clear controller input
-; ==============================================================================
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ; ______________________________________________________________________________
 ; ==============================================================================
@@ -576,8 +542,8 @@ Palettes:
     .db $21,$1C,$3C,$20		; Blue
     .db $21,$0C,$14,$36		; Purple
     ; ----- SPRITE PALETTES --------------------- ;
-    .db $21,$0D,$1C,$36   ; Blue
-    .db $21,$0D,$16,$36   ; Red
+    .db $21,$0D,$1C,$36     ; Blue
+    .db $21,$0D,$16,$36     ; Red
 
 Sprites:
     ; --------- DRAGON SPRITES -------------------- ;
@@ -596,12 +562,12 @@ Sprites:
     .db $B8, $0B, %00000000, $E0	; Bottom 3
     ; --------- MARIO SPRITES --------------------
     ;  y-pos Tile Attr      x-pos
-    .db $B7, $24, %00000001, $10  ; Bottom 1
-    .db $B7, $25, %00000001, $18  ; Bottom 2
-    .db $AF, $22, %00000001, $10  ; Middle 1
-    .db $AF, $23, %00000001, $18  ; Middle 2
-    .db $A7, $20, %00000001, $10  ; Middle 1
-    .db $A7, $21, %00000001, $18  ; Middle 2
+    .db $B7, $24, %00000001, $10    ; Bottom 1
+    .db $B7, $25, %00000001, $18    ; Bottom 2
+    .db $AF, $22, %00000001, $10    ; Middle 1
+    .db $AF, $23, %00000001, $18    ; Middle 2
+    .db $A7, $20, %00000001, $10    ; Middle 1
+    .db $A7, $21, %00000001, $18    ; Middle 2
 
 
 Background_Top8:   ; A.K.A."Nametable"
@@ -710,6 +676,7 @@ Attributes:
     .db %00000000,%00000000,%00000000,%00000000,%00000000,%00000000,%00000000,%00000000
     .db %00000000,%00000000,%00000000,%00000000,%00000000,%00000000,%00000000,%00000000
     .db %00000000,%00000000,%00000000,%00000000,%00000000,%00000000,%00000000,%00000000
+
 ; ______________________________________________________________________________
 ; ==============================================================================
 ; --------------------------------- VECTORS ------------------------------------
@@ -728,4 +695,5 @@ Vectors:
 
     .bank 2
     .org $0000
-    .incbin "SuperMarioWorld_NES.chr"
+    .incbin "sprite-animation.chr"
+

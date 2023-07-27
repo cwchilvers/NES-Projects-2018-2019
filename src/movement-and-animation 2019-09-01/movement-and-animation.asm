@@ -8,9 +8,9 @@
 ; ==============================================================================
 ; -------------------------------- VARIABLES -----------------------------------
 ; ==============================================================================
-  	.rsset $0000	; Start defining variables at RAM location 0
+    .rsset $0000    ; Start defining variables at RAM location 0
 
-PPU_STATUS	  = $2002
+PPU_STATUS	    = $2002
 OAM_ADDR 	    = $2003
 PPU_SCROLL   	= $2005
 PPU_ADDR	    = $2006
@@ -22,20 +22,20 @@ controller_1	 = $4016
 controller_button .rs 1
 
 ; ----- Frog Sprites -----------------------------------------------------------
-frog_tile_TL	= $0201
-frog_tile_TR  = $0205
-frog_tile_BL	= $0209
-frog_tile_BR  = $020D
+frog_tile_TL    = $0201
+frog_tile_TR    = $0205
+frog_tile_BL    = $0209
+frog_tile_BR    = $020D
 
-frog_y_TL     = $0200
-frog_y_TR     = $0204
-frog_y_BL     = $0208
-frog_y_BR     = $020C
+frog_y_TL       = $0200
+frog_y_TR       = $0204
+frog_y_BL       = $0208
+frog_y_BR       = $020C
 
-frog_x_TL     = $0203
-frog_x_TR     = $0207
-frog_x_BL     = $020B
-frog_x_BR     = $020F
+frog_x_TL       = $0203
+frog_x_TR       = $0207
+frog_x_BL       = $020B
+frog_x_BR       = $020F
 
 ; ----- Counters ---------------------------------------------------------------
 frog_stop_go      .rs 1
@@ -46,6 +46,7 @@ frog_distance     .rs 1
 ; ==============================================================================
 ; ------------------------------- INIT CODE ------------------------------------
 ; ==============================================================================
+
     .bank 0
     .org $C000
 
@@ -66,10 +67,10 @@ vblank_1:
     BPL vblank_1
 
 clear_memory:
-    LDA #$00		  ; Load accumulator with memory $00 (0)
+    LDA #$00	    ; Load accumulator with memory $00 (0)
     STA $0000, x	; Store accumulator (x = $00) in $0000 (Zero Page)
     STA $0100, x 	; Store accumulator (x = $00) in $0100 (Stack)
-                  ; Skip $0200 (Sprites Data) to avoid glitch sprite at 0,0
+                    ; Skip $0200 (Sprites Data) to avoid glitch sprite at 0,0
     STA $0300, x 	; Store accumulator (x = $00) in $0300 (RAM)
     STA $0400, x 	; Store accumulator (x = $00) in $0400 (RAM)
     STA $0500, x 	; Etc...
@@ -86,20 +87,20 @@ vblank_2:
 ; -------------------------- Load Stuff Into RAM -------------------------------
 ; ----- Load Palettes ----------------------------------------------------------
 load_palettes:
-    LDA PPU_STATUS	; Read PPU status (in $2002) to reset the high/low latch
+    LDA PPU_STATUS	    ; Read PPU status (in $2002) to reset the high/low latch
     LDA #$3F		    ; Load $3F00 (where palets are stored) in PPU
-    STA PPU_ADDR	  ; Set high byte of $3500 address in $2006
+    STA PPU_ADDR	    ; Set high byte of $3500 address in $2006
     LDA #$00		    ; Load $0000 (where pattern tables are stored) in PPU
-    STA PPU_ADDR  	; Set low byte of $3500 address in $2006
+    STA PPU_ADDR  	    ; Set low byte of $3500 address in $2006
     LDX #$00		    ; Set X to 0
 
 load_palettes_LOOP:
-    LDA palettes, x	       ; Load from address (bg_palette) + X (0)
-    STA PPU_DATA				       ; Write to $2007
-    INX						             ; X = X + 1
-    CPX #$20				           ; Compare X to hex $10 (16)
-    BNE load_palettes_LOOP	 ; Branch back if x =/= hex 10 (dec 16)
-    LDX #$00				           ; Reset X to 0
+    LDA palettes, x	        ; Load from address (bg_palette) + X (0)
+    STA PPU_DATA		    ; Write to $2007
+    INX					    ; X = X + 1
+    CPX #$20			    ; Compare X to hex $10 (16)
+    BNE load_palettes_LOOP  ; Branch back if x =/= hex 10 (dec 16)
+    LDX #$00			    ; Reset X to 0
 
 ; ----- Load Sprites ----------------------------------------------------------
 load_sprites_LOOP:
@@ -111,18 +112,18 @@ load_sprites_LOOP:
 
 ; ----- Load Background --------------------------------------------------------
 load_background:
-  	LDA PPU_STATUS
-  	LDA #$20
-  	STA PPU_ADDR
-  	LDA #$00
-  	STA PPU_ADDR
-  	LDX #$00
+    LDA PPU_STATUS
+    LDA #$20
+    STA PPU_ADDR
+    LDA #$00
+    STA PPU_ADDR
+    LDX #$00
 
 load_background_LOOP:
     LDA background_1, x
     STA PPU_DATA
     INX
-    CPX #$80				; How many bytes (currently 128 bytes)
+    CPX #$80        ; How many bytes (currently 128 bytes)
     BNE load_background_LOOP
 
 ; ----- Load Attributes --------------------------------------------------------
@@ -136,10 +137,10 @@ load_attribute:
 
 load_attributes_LOOP:
     LDA attributes, x
-  	STA PPU_DATA
-  	INX
-  	CPX #08         ; Decimal 8 bytes
-  	BNE load_attributes_LOOP
+    STA PPU_DATA
+    INX
+    CPX #08         ; Decimal 8 bytes
+    BNE load_attributes_LOOP
 
 
 ; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -160,29 +161,6 @@ NMI:
     STA OAM_ADDR	; Set low byte of RAM address to $2003
     LDA #$02		  ; Load from $0200 (RAM)
     STA OAM_DMA		; Set high byte of RAM address to $4014 - Start Transfer
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ; ______________________________________________________________________________
 ; [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
@@ -205,46 +183,46 @@ stopped_or_moving:
 read_controller:
 
 LatchController:
-	 LDA #$01
-	 STA controller_1
-	 LDA #$00
-	 STX controller_1  	 ; Tell both controllers to latch buttons
+    LDA #$01
+    STA controller_1
+    LDA #$00
+    STX controller_1    ; Tell both controllers to latch buttons
 
 ReadA:
-	 LDA controller_1	   ; Player 1 memory port address
-	 AND #%00000001      ; Look at bit 0 and erase all other bits
-	 BEQ ReadADone	     ; Branch to ReadADone if A button NOT pressed (0)
-   ; If A button is pressed
-   LDX #$01
-   STX controller_button
+    LDA controller_1    ; Player 1 memory port address
+    AND #%00000001      ; Look at bit 0 and erase all other bits
+    BEQ ReadADone	    ; Branch to ReadADone if A button NOT pressed (0)
+    ; If A button is pressed
+    LDX #$01
+    STX controller_button
 ReadADone:
 
 ReadB:
-	  LDA controller_1
-	  AND #%00000001
-	  BEQ ReadBDone
+    LDA controller_1
+    AND #%00000001
+    BEQ ReadBDone
     LDX #$02
     STX controller_button
 ReadBDone:
 
 ReadSelect:
-	  LDA controller_1
-	  AND #%00000001
-	  BEQ ReadSelectDone
+    LDA controller_1
+    AND #%00000001
+    BEQ ReadSelectDone
     LDX #$03
     STX controller_button
 ReadSelectDone:
 
 ReadStart:
-	  LDA controller_1
-	  AND #%00000001
-	  BEQ ReadStartDone
+    LDA controller_1
+    AND #%00000001
+    BEQ ReadStartDone
     LDX #$04
     STX controller_button
 ReadStartDone:
 
 ReadUp:
-	  LDA controller_1
+    LDA controller_1
     AND #%00000001
     BEQ ReadUpDone
     LDX #$05
@@ -252,7 +230,7 @@ ReadUp:
 ReadUpDone:
 
 ReadDown:
-	  LDA controller_1
+    LDA controller_1
     AND #%00000001
     BEQ ReadDownDone
     LDX #$06
@@ -260,7 +238,7 @@ ReadDown:
 ReadDownDone:
 
 ReadLeft:
-	  LDA controller_1
+    LDA controller_1
     AND #%00000001
     BEQ ReadLeftDone
     LDX #$07
@@ -268,7 +246,7 @@ ReadLeft:
 ReadLeftDone:
 
 ReadRight:
-	  LDA controller_1
+    LDA controller_1
     AND #%00000001
     BEQ ReadRightDone
     LDX #$08
@@ -391,48 +369,11 @@ frog_animation_right_jump3:
     STX frog_tile_BR
     JMP DONE
 
-
-
-
 ; ------------------------------------------------------------------------------
 
 DONE:
     LDX #$00
     STX controller_button   ; Clear controller input
-
-
-
-; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ; ______________________________________________________________________________
 ; ==============================================================================
@@ -474,11 +415,7 @@ sprites:
 
 background_1:
 
-
-
 attributes:
-
-
 
 ; ______________________________________________________________________________
 ; ==============================================================================
@@ -496,4 +433,4 @@ vectors:
 ; ==============================================================================
     .bank 2
     .org $0000
-    .incbin "Flipbit.chr"
+    .incbin "movement-and-animation.chr"
