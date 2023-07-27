@@ -14,17 +14,19 @@
 3. [Usage](#usage)
 4. [Screenshots](#screenshots)
 5. [Credits](#credits)
-6. [License](#license)
-7. [Contact Information](#contact-information)
+6. [Contact Information](#contact-information)
 
 ## Description
 These are a few test projects I created while learning how to develop games for the NES. These projects were written in 6502 assembly and were assembled using [NESasm](https://github.com/camsaul/nesasm). Sprites were created using [YY-CHR](https://shiru.untergrund.net/software.shtml). The games were tested using the [FCEUX](https://fceux.com/web/home.html) emulator.
 
 ## Installation
-1. 
+1. To run these projects, you will need to install an NES emulator, such as [FCEUX](https://fceux.com/web/home.html).
+2. Download the project files from this repository (click the green "Code" button at the top of the page, then click "Download ZIP").
+3. Extract the ZIP file to a folder on your computer.
 
 ## Usage
-- 
+1. Open your NES emulator.
+2. Open any `.nes` file found in the `bin` folder of the project to run.
 
 ## Screenshots
 <p align="center">
