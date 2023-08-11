@@ -17,7 +17,7 @@
 6. [Contact Information](#contact-information)
 
 ## Description
-These are a few test projects while learning how to develop games for the NES. From 2018-2020, each summer there was about a week where I decided to try some NES game development (and gave up when I got too frustrated). These projects were written in 6502 assembly and were assembled using [NESasm](https://github.com/camsaul/nesasm). Sprites were created using [YY-CHR](https://shiru.untergrund.net/software.shtml). The games were tested using the [FCEUX](https://fceux.com/web/home.html) emulator.
+These are a few test projects from when I was learning how to develop games for the NES. From 2018-2020, each summer there was about a week where I decided to try some NES game development (and gave up when I got too frustrated). These projects were written in 6502 assembly and were assembled using [NESasm](https://github.com/camsaul/nesasm). Sprites were created using [YY-CHR](https://shiru.untergrund.net/software.shtml). The games were tested using the [FCEUX](https://fceux.com/web/home.html) emulator.
 
 ## Installation
 1. To run these projects, you will need to install an NES emulator, such as [FCEUX](https://fceux.com/web/home.html).
