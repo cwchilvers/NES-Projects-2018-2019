@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/6502_Assembly-8A2BE2?style=for-the-badge&color=rgb(107%2C%2090%2C%2088)" alt="6502 Assembly">
 </p>
 
-<h4 align="center">Test projects for learning NES game development.</h4>
+<h4 align="center">Personal projects for learning NES game development.</h4>
 
 ## Table of Contents
 1. [Description](#description)
