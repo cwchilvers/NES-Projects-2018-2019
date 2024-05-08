@@ -13,8 +13,9 @@
 2. [Installation](#installation)
 3. [Usage](#usage)
 4. [Screenshots](#screenshots)
-5. [Credits](#credits)
-6. [Contact Information](#contact-information)
+5. [Technologies Used](#technologies-used)
+6. [Credits](#credits)
+7. [Contact Information](#contact-information)
 
 ## Description
 These are a few test projects from when I was learning how to develop games for the NES. From 2018-2020, each summer there was about almost a week where I decided to try some NES game development (and then gave up when I got too frustrated and felt I was wasting my time). These projects were written in 6502 assembly and were assembled using [NESasm](https://github.com/camsaul/nesasm). Sprites were created using [YY-CHR](https://shiru.untergrund.net/software.shtml). These incomplete demos were tested using the [FCEUX](https://fceux.com/web/home.html) emulator.
@@ -35,8 +36,10 @@ These are a few test projects from when I was learning how to develop games for 
   <img src="https://github.com/cwchilvers/Basic-Tech-Blog/assets/59628271/c2731247-8af5-4dcd-9b04-3a9ab585cc9f">
 </p>
 
-## Credits
+## Technologies Used
 - [NESasm](https://github.com/camsaul/nesasm)
+
+## Credits
 - [YY-CHR](https://shiru.untergrund.net/software.shtml)
 - [FCEUX](https://fceux.com/web/home.html)
 
