@@ -37,11 +37,11 @@ These are a few test projects from when I was learning how to develop games for 
 </p>
 
 ## Technologies Used
-- [NESasm](https://github.com/camsaul/nesasm)
+* [NESasm](https://github.com/camsaul/nesasm)
 
 ## Credits
-- [YY-CHR](https://shiru.untergrund.net/software.shtml)
-- [FCEUX](https://fceux.com/web/home.html)
+* [YY-CHR](https://shiru.untergrund.net/software.shtml)
+* [FCEUX](https://fceux.com/web/home.html)
 
 ## Contact Information
 <p align="center">
